@@ -1,9 +1,9 @@
 import React from 'react';
 // ADD IMPORTS BACK FOR GRAPHS SECTION
-import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
-import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
-import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
-import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
+import grantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
+import grantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
+import grantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
+import hrfPhoto from '../../../styles/Images/paper-stack.jpg';
 import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
 import { useHistory } from 'react-router-dom';
@@ -35,19 +35,19 @@ function RenderLandingPage(props) {
       {/* <div className="graphs-section"> */}
       <div className="graphs-section">
         <div>
-          <img src={GrantRatesByOfficeImg} />
+          <img src={grantRatesByOfficeImg} alt="grant rated by office" />
           <h3>
             Search Grant Rates By Office
           </h3>
         </div>
         <div>
-          <img src={GrantRatesByNationalityImg} />
+          <img src={grantRatesByNationalityImg} alt="grant rates by nationality" />
           <h3>
             Search Grant Rates By Nationallity
           </h3>
         </div>
         <div>
-          <img src={GrantRatesOverTimeImg} />
+          <img src={grantRatesOverTimeImg} alt="grant rates over time" />
           <h3>
             Search Grant Rates Over Time
           </h3>
@@ -65,7 +65,7 @@ function RenderLandingPage(props) {
 
       <div className="middle-section">
         <div className="hrf-img-container">
-          <img src={HrfPhoto} alt="Human Rights First" className="hrf-img" />
+          <img src={hrfPhoto} alt="Human Rights First" className="hrf-img" />
         </div>
         <div className="middle-section-text-container">
           <h3>

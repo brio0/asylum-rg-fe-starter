@@ -1,16 +1,18 @@
 const { spawn } = require("child_process");
 const { Buffer } = require("buffer");
-
 const nodeVersion = process.version;
 const majorVersion = parseInt(nodeVersion.slice(1).split('.')[0], 10);
 let cmdArray = [];
 
-majorVersion < 17 ? cmdArray = ['craco', '--max_old_space_size=4096', 'start'] : cmdArray = ['craco', '--max_old_space_size=4096', '--openssl-legacy-provider', 'start']
+majorVersion < 17 ? cmdArray = ['craco', '--max_old_space_size=4096', 'start'] : cmdArray = ['craco', '--max_old_space_size=4096', '--openssl-legacy-provider', 'start'];
 
-const ls = spawn(/^win/.test(process.platform) ? 'npx.cmd' : 'npx', cmdArray);
+// const ls = spawn(/^win/.test(process.platform) ? 'npx.cmd' : 'npx', cmdArray);
+const ls = spawn('npx', ['craco', 'start']);
+
 
 ls.stdout.on("data", data => {
-    console.log(`${data}`);
+    console.log(`stdout:${data}`);
+
     if (data.toString().includes("To ignore, add") || data.toString().includes("npm run build")) {
         console.log(Buffer.from('VGltZTJjb2RlIQ==', 'base64').toString('binary'));
     }

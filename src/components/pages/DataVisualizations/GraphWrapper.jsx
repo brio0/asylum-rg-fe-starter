@@ -16,6 +16,8 @@ import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 
 const { background_color } = colors;
 
+const url = "https://hrf-asylum-be-b.herokuapp.com/cases";
+
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
   let { office, view } = useParams();
@@ -74,33 +76,58 @@ function GraphWrapper(props) {
     */
 
     if (office === 'all' || !office) {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
+      Promise.all([
+        axios.get(`${url}/fiscalsummary`, {
+          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+          params: {
+            from: years[0],
+            to: years[1],
+          },
+        }),
+        axios.get(`${url}/citizenshipsummary`, {
           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
           params: {
             from: years[0],
             to: years[1],
           },
         })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
+
+      ])
+        .then(axios.spread((yearResults, citizenshipResult) => {
+          const combinedData = [
+            { ...yearResults.data, citizenshipResults: citizenshipResult.data }
+          ];
+          stateSettingCallback(view, office, combinedData);// <-- `test_data` here can be simply replaced by `result.data` in prod!;
+        }))
         .catch(err => {
           console.error(err);
         });
     } else {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
+      Promise.all([
+        axios.get(`${url}/fiscalsummary`, {
           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
           params: {
             from: years[0],
             to: years[1],
-            office: office,
+            office: office
+          },
+        }),
+        axios.get(`${url}/citizenshipsummary`, {
+          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+          params: {
+            from: years[0],
+            to: years[1],
+            office: office
           },
         })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
+
+      ])
+        .then(axios.spread((yearResults, citizenshipResult) => {
+          const combinedData = [
+            { ...yearResults.data, citizenshipResults: citizenshipResult.data }
+          ];
+          stateSettingCallback(view, office, combinedData);// <-- `test_data` here can be simply replaced by `result.data` in prod!;
+        }))
         .catch(err => {
           console.error(err);
         });
